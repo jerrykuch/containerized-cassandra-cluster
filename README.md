@@ -43,10 +43,15 @@ If you want to start fresh again (no data, vanilla config):
 sudo rm -r ./data/* ./etc/*
 ```
 
+Or you can use the `teardown.sh` script to destroy the containers and
+their persisted data and configuration.
+
 ## Destroying the cluster
 ```
 docker-compose down
 ```
+
+If you do just the above the nodes' files should be preserved.
 
 ## nodetool
 ```
@@ -88,3 +93,10 @@ docker-compose restart
 A good example can be found in this [blog
 post](https://digitalis.io/blog/containerized-cassandra-cluster-for-local-testing/)
 
+## A Few Basic Helper Scripts
+
+The following scripts may save a bit of typing when interacting with
+the cluster.
+   - `cqlsh.sh`
+   - `nodetool.sh`
+   - `teardown.sh`
