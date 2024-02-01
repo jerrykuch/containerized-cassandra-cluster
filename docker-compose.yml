@@ -2,7 +2,7 @@ networks:
   cassandra:  # docker network where all cassandra nodes will be put in
 services:
   cass1:
-    image: cassandra:3.11.13   # better to use a specific version, if you want to control upgrades 
+    image: cassandra:4.1.3   # better to use a specific version, if you want to control upgrades
     container_name: cass1
     hostname: cass1
     healthcheck:
@@ -26,7 +26,7 @@ services:
         CASSANDRA_NUM_TOKENS: 128
 
   cass2:
-    image: cassandra:3.11.13
+    image: cassandra:4.1.3
     container_name: cass2
     hostname: cass2
     healthcheck:
@@ -47,7 +47,7 @@ services:
         condition: service_healthy
 
   cass3:
-    image: cassandra:3.11.13
+    image: cassandra:4.1.3
     container_name: cass3
     hostname: cass3
     healthcheck:
@@ -66,4 +66,3 @@ services:
     depends_on:
       cass2:    # start cass3 only after cass1 is healthy
         condition: service_healthy
-
