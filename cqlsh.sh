@@ -6,3 +6,5 @@ then echo "Usage:  cqlsh.sh node_container_name"
 fi
 
 docker exec -it $1 cqlsh
+
+
