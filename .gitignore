@@ -1,5 +1,6 @@
-/data/
-/etc*
+data/*
+etc*
 .#README.md
 .#*
 available_rooms.csv
+scratch/
