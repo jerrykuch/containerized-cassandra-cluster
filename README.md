@@ -35,12 +35,14 @@ docker exec cass1  nodetool status
      [docker-compose.yml](docker-compose.yml)
    - Cassandra data is stored under `./data/` on the host and kept even if the cluster is destroyed
    - Cassandra configuration files are under `./etc/`.
+   - The `scratch/node_name` directory is mounted as a volume at
+     `/var/lib/scratch` in each node's container
    - You can access the cluster from your app on `localhost:9042`
    - Or you can add a container with your app to [docker-compose.yml](docker-compose.yml)
 
 If you want to start fresh again (no data, vanilla config):
 ```
-sudo rm -r ./data/* ./etc/*
+sudo rm -r ./data/* ./etc/* ./scratch/*
 ```
 
 Or you can use the `teardown.sh` script to destroy the containers and
