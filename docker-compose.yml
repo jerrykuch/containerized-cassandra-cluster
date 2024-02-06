@@ -17,6 +17,7 @@ services:
     volumes:
       - ./data/cass1:/var/lib/cassandra    # This is the volume that will persist data for cass1 node
       - ./etc/cass1:/etc/cassandra   # Use your own config files for full control
+      - ./scratch/cass1:/var/lib/scratch   # Convenient staging ground for files
     environment: &environment    # Declare and save environments variables into "environment"
         CASSANDRA_SEEDS: "cass1,cass2"    # The first two nodes will be seeds
         CASSANDRA_CLUSTER_NAME: SolarSystem
@@ -41,6 +42,7 @@ services:
     volumes:
       - ./data/cass2:/var/lib/cassandra    # This is the volume that will persist data for cass2 node
       - ./etc/cass2:/etc/cassandra    # Use your own config files for full control
+      - ./scratch/cass2:/var/lib/scratch   # Convenient staging ground for files
     environment: *environment    # point to "environment" to use the same environment variables as cass1
     depends_on:
       cass1:    # start cass2 only after cass1 is healthy
@@ -62,6 +64,7 @@ services:
     volumes:
       - ./data/cass3:/var/lib/cassandra    # This is the volume that will persist data for cass3 node
       - ./etc/cass3:/etc/cassandra    # Use your own config files for full control
+      - ./scratch/cass3:/var/lib/scratch   # Convenient staging ground for files
     environment: *environment    # point to "environment" to use the same environment variables as cass1
     depends_on:
       cass2:    # start cass3 only after cass1 is healthy

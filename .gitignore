@@ -2,3 +2,4 @@
 /etc*
 .#README.md
 .#*
+available_rooms.csv

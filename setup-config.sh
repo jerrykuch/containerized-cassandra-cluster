@@ -19,6 +19,7 @@ etc_volumes=$(docker compose config | grep 'container_name:.*' | awk -F ": " '{p
 
 for v in ${etc_volumes}; do
     mkdir -p ./etc/$v
+    mkdir -p ./scratch/$v
     cp -r etc_cassandra_${CASSANDRA_VERSION}_vanilla/* ./etc/$v
 done
 
