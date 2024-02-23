@@ -25,7 +25,7 @@ at least for me, without too much fuss.
 ## Quick start
 ```
 ./setup-config.sh
-docker-compose up -d
+docker compose up -d
 
 # Check the cluster status
 docker exec cass1  nodetool status
@@ -50,7 +50,7 @@ their persisted data and configuration.
 
 ## Destroying the cluster
 ```
-docker-compose down
+docker compose down
 ```
 
 If you do just the above the nodes' files should be preserved.
