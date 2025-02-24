@@ -1,44 +1,51 @@
 # Containerized Cassandra Cluster
 
-Clean and simple containerized Apache Cassandra cluster for local
-testing. A modern alternative to
-[ccm](https://github.com/digitalis-io/dcc).
+The repository you're looking at contains a relatively clean and
+simple containerized Apache Cassandra cluster for local testing.
 
-
-This approach is based on [official
-image](https://hub.docker.com/_/cassandra/) (maintained by [Docker
+The approach is based on the [official Cassandra
+image](https://hub.docker.com/_/cassandra/) (maintained on [Docker
 Hub](https://docs.docker.com/docker-hub/official_images/) ), but still
-lets you control all the config files without a need to build a custom
-image. Which is described in more details in this [blog
-post](https://digitalis.io/blog/containerized-cassandra-cluster-for-local-testing/)
+lets you control all the Cassandra node configuration files without
+requiring you to build custom Docker images.
 
-I created this fork because the original
-[ccc](https://github.com/digitalis-io/ccc) didn't quite do what I
-wanted.  The fork should create a Docker Compose cluster with as many
-Cassandra nodes as are specified in the `docker-compose.yml` file in a
-fairly turnkey way according to the quick start instructions below.
+I created this fork from a now defunct repository because that
+original repository didn't quite do what I wanted.  The fork should
+create a Docker Compose cluster with as many Cassandra nodes as are
+specified in the `docker-compose.yml` file in a fairly turnkey way
+according to the quick start instructions below.
 
-What's here works on macOS using [Docker Desktop on
-Mac](https://docs.docker.com/desktop/install/mac-install/),
-at least for me, without too much fuss.
+I usually use What's here on macOS using [Docker Desktop on
+Mac](https://docs.docker.com/desktop/install/mac-install/), without
+too much fuss.  Things also work under Ubuntu, as long as you `sudo`
+as appropriate when running Docker commands and the included scripts
+that rely on them.
 
-## Quick start
+## Quick Start
 ```
+# NOTE: Run the next two commands ONLY during your initial setup...
 ./setup-config.sh
 docker compose up -d
 
 # Check the cluster status
-docker exec cass1  nodetool status
+docker exec cass1 nodetool status
 ```
    - The above will bring up a 3 node Cassandra cluster. You can
      configure the number of Cassandra containers in
      [docker-compose.yml](docker-compose.yml)
-   - Cassandra data is stored under `./data/` on the host and kept even if the cluster is destroyed
+   - Cassandra data is stored under `./data/` on the host and preserved even if the cluster is destroyed
    - Cassandra configuration files are under `./etc/`.
    - The `./scratch/node_name` directory is mounted as a volume at
-     `/var/lib/scratch` in each node's container
-   - You can access the cluster from your app on `localhost:9042`
-   - Or you can add a container with your app to [docker-compose.yml](docker-compose.yml)
+     `/var/lib/scratch` in each node's container.  If you have files
+     full of data you want to import in Cassandra, you might find it
+     handy to stage the files in this `scratch` directory since it
+     will be visible from inside the containers and you can then
+     import data into Cassandra using Cassandra's tools running on
+     your cluster nodes
+   - You can access the cluster from any apps you might write on `localhost:9042`
+   - Or you can add a container with your app to the
+     [docker-compose.yml](docker-compose.yml) and make it run as part
+     of the cluster
 
 If you want to start fresh again (no data, vanilla config):
 ```
