@@ -1,7 +1,8 @@
 # Containerized Cassandra Cluster
 
 The repository you're looking at contains a relatively clean and
-simple containerized Apache Cassandra cluster for local testing.
+simple containerized Apache Cassandra cluster suitable for local
+testing and development purposes.
 
 The approach is based on the [official Cassandra
 image](https://hub.docker.com/_/cassandra/) (maintained on [Docker
@@ -10,10 +11,12 @@ lets you control all the Cassandra node configuration files without
 requiring you to build custom Docker images.
 
 I created this fork from a now defunct repository because that
-original repository didn't quite do what I wanted.  The fork should
-create a Docker Compose cluster with as many Cassandra nodes as are
+original repository didn't quite do what I wanted.  The environment
+will create a Docker Compose cluster with Cassandra nodes as
 specified in the `docker-compose.yml` file in a fairly turnkey way
-according to the quick start instructions below.
+according to the quick start instructions below.  If you want more
+than the three nodes currently configured, edit `docker-compose.yml`
+accordingly.
 
 I usually use what's here on macOS using [Docker Desktop on
 Mac](https://docs.docker.com/desktop/install/mac-install/), without
@@ -33,8 +36,9 @@ docker exec cass1 nodetool status
    - The above will bring up a 3 node Cassandra cluster. You can
      configure the number of Cassandra containers in
      [docker-compose.yml](docker-compose.yml)
-   - Cassandra data is stored under `./data/` on the host and preserved even if the cluster is destroyed
-   - Cassandra configuration files are under `./etc/`.
+   - Cassandra node data is stored under `./data/` on the host and
+     preserved even if the cluster is destroyed
+   - Cassandra node configuration files are stored under `./etc/`.
    - Each `./scratch/node_name` directory is mounted as a volume at
      `/var/lib/scratch` in the named node's container.  You might find
      these directories useful for staging data or scripts or as per
@@ -50,14 +54,15 @@ If you want to start fresh again (no data, and a vanilla configuration):
 sudo rm -r ./data/* ./etc/* ./scratch/*
 ```
 
-Or you can use the `teardown.sh` script to destroy the containers and
+You can also use the `teardown.sh` script to destroy the containers and
 their persisted data and configuration.
 
 ## Destroying the cluster
+
+Destroy the cluster with:
 ```
 docker compose down
 ```
-
 If you do just the above the nodes' data and files should be preserved.
 
 ## nodetool
@@ -78,10 +83,10 @@ You can run CQL commands as follows:
 ```
 docker exec cass1 cqlsh -e "DESCRIBE keyspaces"
 
-# Or in interactive shell mode
+# Or to get an interactive cqlsh shell
 docker exec -it cass1 cqlsh
 ```
-or using the provided `cqlsh.sh` script:
+You can also use the provided `cqlsh.sh` script:
 ```
 cqlsh.sh node_container_name [other_args_to_cqlsh]
 ```
@@ -105,8 +110,8 @@ in mind the following:
      one for data and one for config files
    - Some basic Cassandra configuration can be done through
      `CASSANDRA_` environment variables
-   - Check the syntax with `docker-compose config` before running
-     `./setup-config.sh`
+   - Check the syntax of your `docker-compose.yml` file by running
+     `docker compose config --dry-run` before running `./setup-config.sh`
 
 ## Cassandra configuration
 
